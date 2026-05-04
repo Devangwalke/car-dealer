@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: car-dealer-api
+    env: java
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/car-dealer-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: PORT
+        value: 8080
