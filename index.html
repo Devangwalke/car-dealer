@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoVault — Car Dealer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">AutoVault</span>
+    </div>
+    <nav>
+      <a class="nav-item active" onclick="showPage('dashboard')">
+        <span class="nav-icon">◈</span> Dashboard
+      </a>
+      <a class="nav-item" onclick="showPage('inventory')">
+        <span class="nav-icon">◉</span> Inventory
+      </a>
+      <a class="nav-item" onclick="showPage('add')">
+        <span class="nav-icon">◎</span> Add Car
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="dealer-badge">Premium Dealer</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div>
+          <p class="page-sub">Welcome back</p>
+          <h1 class="page-title">Dashboard</h1>
+        </div>
+        <button class="btn-primary" onclick="showPage('add')">+ Add New Car</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Cars</div>
+          <div class="stat-value" id="count-total">—</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:100%;background:#c9a84c"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Available</div>
+          <div class="stat-value" id="count-available">—</div>
+          <div class="stat-bar"><div class="stat-bar-fill available-fill"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sold</div>
+          <div class="stat-value" id="count-sold">—</div>
+          <div class="stat-bar"><div class="stat-bar-fill sold-fill"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Value</div>
+          <div class="stat-value" id="count-value">—</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:80%;background:#7c6fff"></div></div>
+        </div>
+      </div>
+      <div class="section-title">Recent Inventory</div>
+      <div id="recent-list" class="car-grid"></div>
+    </div>
+
+    <!-- INVENTORY -->
+    <div id="page-inventory" class="page">
+      <div class="page-header">
+        <div>
+          <p class="page-sub">Browse & manage</p>
+          <h1 class="page-title">Inventory</h1>
+        </div>
+        <div class="filter-group">
+          <select id="filter-status" onchange="applyFilter()">
+            <option value="">All Status</option>
+            <option value="AVAILABLE">Available</option>
+            <option value="SOLD">Sold</option>
+          </select>
+          <input type="text" id="filter-search" placeholder="Search brand or model..." oninput="applyFilter()" />
+        </div>
+      </div>
+      <div id="inventory-list" class="car-grid"></div>
+    </div>
+
+    <!-- ADD / EDIT -->
+    <div id="page-add" class="page">
+      <div class="page-header">
+        <div>
+          <p class="page-sub" id="form-sub">New listing</p>
+          <h1 class="page-title" id="form-title">Add Car</h1>
+        </div>
+      </div>
+      <div class="form-card">
+        <input type="hidden" id="carId" />
+        <div class="form-grid">
+          <div class="field">
+            <label>Brand *</label>
+            <input type="text" id="brand" placeholder="e.g. Toyota" />
+          </div>
+          <div class="field">
+            <label>Model *</label>
+            <input type="text" id="carModel" placeholder="e.g. Camry" />
+          </div>
+          <div class="field">
+            <label>Year *</label>
+            <input type="number" id="manufactureYear" placeholder="e.g. 2023" />
+          </div>
+          <div class="field">
+            <label>Price (₹) *</label>
+            <input type="number" id="price" placeholder="e.g. 1500000" />
+          </div>
+          <div class="field">
+            <label>Color</label>
+            <input type="text" id="color" placeholder="e.g. Pearl White" />
+          </div>
+          <div class="field">
+            <label>Fuel Type</label>
+            <select id="fuelType">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Electric">Electric</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="CNG">CNG</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Transmission</label>
+            <select id="transmission">
+              <option value="Manual">Manual</option>
+              <option value="Automatic">Automatic</option>
+              <option value="CVT">CVT</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="status">
+              <option value="AVAILABLE">Available</option>
+              <option value="SOLD">Sold</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label>Description</label>
+            <textarea id="description" placeholder="e.g. Single owner, full service history..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" onclick="saveCar()">💾 Save Car</button>
+          <button class="btn-ghost" onclick="clearForm()">✖ Clear</button>
+          <button class="btn-ghost" onclick="showPage('inventory')">← Back</button>
+        </div>
+        <div id="form-msg" class="form-msg"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Delete Modal -->
+  <div id="modal" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+      <div class="modal-icon">🗑</div>
+      <h3>Delete this car?</h3>
+      <p>This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-danger" onclick="confirmDelete()">Yes, Delete</button>
+        <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
