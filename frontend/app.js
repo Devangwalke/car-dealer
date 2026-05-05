@@ -1,4 +1,4 @@
-const API = 'http://localhost:8080/api/cars';
+const API = 'https://car-dealer-api-production-8eec.up.railway.app/api/cars';
 let allCars = [];
 let deleteId = null;
 let activePage = 'dashboard';
